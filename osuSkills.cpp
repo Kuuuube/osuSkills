@@ -58,7 +58,7 @@ void CalculateSkills(Beatmap &beatmap)
 
 void PrintResults(Beatmap &beatmap)
 {
-	cout << "Stamina: " << beatmap.skills.stamina << " Tenacity: " << beatmap.skills.tenacity << " Agility: " << beatmap.skills.agility << " Accuracy: " << beatmap.skills.accuracy << " Precision: " << beatmap.skills.precision << " Reaction: " << beatmap.skills.reaction << " Memory: " << beatmap.skills.memory << " Mods:" << beatmap.modsString << ", MD5: " << endl;
+	cout << "Stamina: " << beatmap.skills.stamina << " Tenacity: " << beatmap.skills.tenacity << " Agility: " << beatmap.skills.agility << " Accuracy: " << beatmap.skills.accuracy << " Precision: " << beatmap.skills.precision << " Reaction: " << beatmap.skills.reaction << " Memory: " << beatmap.skills.memory << " Mods:" << beatmap.modsString << ", MD5: ";
 }
 
 bool ProcessFile(std::string filepath)
