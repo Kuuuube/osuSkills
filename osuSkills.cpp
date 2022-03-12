@@ -21,10 +21,8 @@
 
 bool PreprocessMap(Beatmap &beatmap)
 {
-	cout << "*** Preprocessing " << beatmap.name << "..." << endl;
 	if (beatmap.hitObjects.size() < 2)
 	{
-		cout << endl << "The map has less than 2 hit objects!" << endl << endl;
 		return 0;
 	}
 
@@ -39,7 +37,6 @@ bool PreprocessMap(Beatmap &beatmap)
 	
 	if (beatmap.distances.size() == 0)
 		return 0;
-	cout << "Preprocessing " << beatmap.name << "... completed!" << endl << endl;
 	return 1;
 }
 
@@ -61,14 +58,7 @@ void CalculateSkills(Beatmap &beatmap)
 
 void PrintResults(Beatmap &beatmap)
 {
-	cout << "* " << beatmap.name << beatmap.modsString << " *" << endl;
-	cout << "Stamina: " << beatmap.skills.stamina << endl;
-	cout << "Tenacity: " << beatmap.skills.tenacity << endl;
-	cout << "Agility: " << beatmap.skills.agility << endl;	
-	cout << "Accuracy: " << beatmap.skills.accuracy << endl;
-	cout << "Precision: " << beatmap.skills.precision << endl;
-	cout << "Reaction: " << beatmap.skills.reaction << endl;
-	cout << "Memory: " << beatmap.skills.memory << endl;
+	cout << "Stamina: " << beatmap.skills.stamina << " Tenacity: " << beatmap.skills.tenacity << " Agility: " << beatmap.skills.agility << " Accuracy: " << beatmap.skills.accuracy << " Precision: " << beatmap.skills.precision << " Reaction: " << beatmap.skills.reaction << " Memory: " << beatmap.skills.memory << " Mods:" << beatmap.modsString << " MD5: " << endl;
 }
 
 bool ProcessFile(std::string filepath)
@@ -79,7 +69,7 @@ bool ProcessFile(std::string filepath)
 	if (tokens.size() >= 2 && tokens[2].length()) // there are some mods here probably!
 	{
 		std::vector<std::string> tokensMods;
-		FileReader::tokenize(tokens[2], tokensMods, " +");
+		FileReader::tokenize(tokens[2], tokensMods, " ");
 		if (tokensMods.size())
 		{
 			for (auto mod : tokensMods)
@@ -106,20 +96,20 @@ bool ProcessFile(std::string filepath)
 	std::ifstream beatmapFile(filepath);
 	if (beatmapFile.is_open())
 	{
-		cout << "Opened the beatmap " << filepath << endl;
 		Beatmap beatmap;
-		cout << "*** Parsing...";
 		if (!FileReader::ParseBeatmap(beatmapFile, beatmap))
 		{
-			cout << "\r*** Parsing... failed!" << endl << endl;
 			return 0;
 		}
-		cout << "\r*** Parsing... successful!" << endl << endl;
 		beatmapFile.close();
 		if (mods)
 		{
 			beatmap.modsString = tokens[2];
 			ApplyMods(beatmap, mods);
+		}
+		else
+		{
+			beatmap.modsString = " NM";
 		}
 		PreprocessMap(beatmap);
 		CalculateAimStrains(beatmap);
@@ -130,7 +120,6 @@ bool ProcessFile(std::string filepath)
 	}
 	else
 	{
-		cout << "Can't open " << filepath << endl;
 		return 0;
 	}
 }
@@ -140,17 +129,12 @@ int main(int argc, char** argv)
 	while (1)
 	{
 		LoadFormulaVars();
-		cout << "Paste (or drag'n'drop) a map or it's filepath to calculate skills" << endl;
-		cout << "If you want to add mods, map name must be inside \" 's" << endl;
-		cout << "Example: \"C:\\osu!\\Songs\\mymap.osu\" +HD +HR +FL" << endl;
 
 		std::string line;
 		getline(std::cin, line);
 		if (!line.length())
 			break;
-		cout << endl;
 		ProcessFile(line);
-		cout << endl;
 	}
 		
 	return 0;
