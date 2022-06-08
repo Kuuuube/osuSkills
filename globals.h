@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include "vector2d.h"
+#include <string>
 
 struct TIMING
 {
