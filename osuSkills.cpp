@@ -130,13 +130,35 @@ int main(int argc, char** argv)
 {
 	while (1)
 	{
-		LoadFormulaVars();
-
-		std::string line;
-		getline(std::cin, line);
-		if (!line.length())
+		if (argc == 1)
+		{
+			cout << "osuSkills: missing .osu file path\nUsage: osuSkills [path]\n";
 			break;
-		ProcessFile(line);
+		}
+
+		std::string help = "-h";
+		std::string help2 = "--help";
+		if (argv[1] == help || argv[1] == help2)
+		{
+			cout << "Usage: osuSkills [path]\n";
+			break;
+		}
+
+		if (argc > 2)
+		{
+			cout << "osuSkills: too many arguments\nUsage: osuSkills [path]\n";
+			break;
+		}
+
+		if (argc == 2)
+		{
+			LoadFormulaVars();
+			ProcessFile(argv[1]);
+			break;
+		}
+
+		cout << "osuSkills: Could not parse arguments\nUsage: osuSkills [path]\n";
+		break;
 	}
 		
 	return 0;
