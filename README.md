@@ -7,7 +7,7 @@ http://osuskills.com
 
 # Tools and dependencies
 
-Project is being developed under Visual Studio 2015 but .exe for the app must be complied using MinGW 7.3.0 x64 compiler for C/C++
+This is compiled in MingW-w64 12.1.0 using the following:
 
 ```g++ -std=c++11 *.cpp -O2 -o osuSkills.exe```
 
